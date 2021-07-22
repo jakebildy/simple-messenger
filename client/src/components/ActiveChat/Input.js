@@ -3,6 +3,7 @@ import { FormControl, FilledInput } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
+import { addConversation } from "../../store/conversations";
 
 const styles = {
   root: {
@@ -33,6 +34,12 @@ class Input extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
+
+    const canMessageConversation = this.props.conversations.find(
+      (conversation) => conversation.id === this.props.conversationId,
+    ) != null ? true : false;
+
+
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     const reqBody = {
       text: event.target.text.value,
@@ -40,10 +47,27 @@ class Input extends Component {
       conversationId: this.props.conversationId,
       sender: this.props.conversationId ? null : this.props.user,
     };
-    await this.props.postMessage(reqBody);
-    this.setState({
-      text: "",
-    });
+
+    const message = {
+      text: event.target.text.value,
+      recipientId: this.props.otherUser.id,
+      conversationId: this.props.conversationId,
+      senderId: this.props.user.id,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+
+    if (canMessageConversation) {
+      await this.props.postMessage(reqBody);
+      this.setState({
+        text: "",
+      });
+
+
+      this.props.addConversation(this.props.otherUser.id, message,);
+      this.props.addMessage();
+    }
   };
 
   render() {
@@ -77,6 +101,10 @@ const mapDispatchToProps = (dispatch) => {
     postMessage: (message) => {
       dispatch(postMessage(message));
     },
+    addConversation: (recipientId, message) => {
+      dispatch(addConversation(recipientId, message));
+    }
+
   };
 };
 
