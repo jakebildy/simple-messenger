@@ -32,6 +32,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.fetchConversations();
+
   }
 
   handleLogout = async () => {
@@ -54,7 +55,7 @@ class Home extends Component {
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
           <SidebarContainer />
-          <ActiveChat />
+          <ActiveChat/>
         </Grid>
       </>
     );
