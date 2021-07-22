@@ -5,12 +5,10 @@ import moment from "moment";
 
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
-
-  const messagesOrdered = messages.sort((a,b)=> (a.createdAt > b.createdAt ? 1 : -1));
-
+  
   return (
     <Box>
-       {messagesOrdered.map((message) => {
+       {messages.map((message) => {
         const time = moment(message.createdAt).format("h:mm");
 
         return message.senderId === userId ? (

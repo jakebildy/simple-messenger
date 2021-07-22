@@ -55,7 +55,7 @@ class Home extends Component {
         <Grid container component="main" className={classes.root}>
           <CssBaseline />
           <SidebarContainer />
-          <ActiveChat addMessage={this.addMessage}/>
+          <ActiveChat/>
         </Grid>
       </>
     );
