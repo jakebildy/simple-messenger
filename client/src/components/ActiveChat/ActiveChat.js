@@ -43,7 +43,6 @@ const ActiveChat = (props) => {
               otherUser={conversation.otherUser}
               conversationId={conversation.id}
               user={user}
-              addMessage={props.addMessage}
             />
           </Box>
         </>

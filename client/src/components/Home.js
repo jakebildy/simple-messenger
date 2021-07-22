@@ -20,7 +20,6 @@ class Home extends Component {
     this.state = {
       isLoggedIn: false,
     };
-    this.addMessage = this.addMessage.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -34,12 +33,6 @@ class Home extends Component {
   componentDidMount() {
     this.props.fetchConversations();
 
-  }
-
-  addMessage(){
-    // console.log("Adding message");
-    // console.log("CONVOS", this.props.conversations);
-    this.setState({});
   }
 
   handleLogout = async () => {

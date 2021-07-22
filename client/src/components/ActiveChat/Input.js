@@ -3,7 +3,6 @@ import { FormControl, FilledInput } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
-import { addConversation } from "../../store/conversations";
 
 const styles = {
   root: {
@@ -43,24 +42,10 @@ class Input extends Component {
       conversationId: this.props.conversationId ,
       sender: this.props.conversationId ? null : this.props.user,
     };
-
-    const message = {
-      text: event.target.text.value,
-      recipientId: this.props.otherUser.id,
-      conversationId: this.props.conversationId ,
-      senderId: this.props.user.id,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
     await this.props.postMessage(reqBody);
     this.setState({
       text: "",
     });
-
-
-    this.props.addConversation(this.props.otherUser.id, message,);
-    this.props.addMessage();
     
   };
 
@@ -95,9 +80,6 @@ const mapDispatchToProps = (dispatch) => {
     postMessage: (message) => {
       dispatch(postMessage(message));
     },
-    addConversation: (recipientId, message) => {
-      dispatch(addConversation(recipientId, message));
-    }
 
   };
 };
